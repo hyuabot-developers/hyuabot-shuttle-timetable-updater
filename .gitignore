@@ -1,0 +1,4 @@
+.idea/
+venv/
+*.pyc
+src/hyuabot_shuttle_timetable_updater.egg-info/
