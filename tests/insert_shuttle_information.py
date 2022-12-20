@@ -1,5 +1,5 @@
 import json
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone, timedelta, date
 
 from aiohttp import ClientSession
 from sqlalchemy import PrimaryKeyConstraint, String
@@ -25,7 +25,7 @@ class ShuttlePeriod(BaseModel):
 class ShuttleHoliday(BaseModel):
     __tablename__ = "shuttle_holiday"
     __table_args__ = (PrimaryKeyConstraint("holiday_date", "calendar_type"),)
-    holiday_date: Mapped[datetime.date] = mapped_column(nullable=False)
+    holiday_date: Mapped[date] = mapped_column(nullable=False)
     holiday_type: Mapped[str] = mapped_column(String(15), nullable=False)
     calendar_type: Mapped[str] = mapped_column(String(15), nullable=False)
 

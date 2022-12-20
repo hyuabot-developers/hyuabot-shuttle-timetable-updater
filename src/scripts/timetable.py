@@ -29,7 +29,7 @@ async def fetch_shuttle_timetable(db_session: Session, period: str, day: str):
     timetable: list[dict] = []
 
     cumulative_time_dict: dict[str, dict[str, int]] = {}
-    route_dict: dict[str, dict[(str, str), str]] = {}
+    route_dict: dict[str, dict] = {}
     for stop_route_item in db_session.query(ShuttleRouteStop).all():  # type: ShuttleRouteStop
         if stop_route_item.route_name not in cumulative_time_dict:
             cumulative_time_dict[stop_route_item.route_name] = {}
@@ -58,4 +58,3 @@ async def fetch_shuttle_timetable(db_session: Session, period: str, day: str):
     insert_statement = insert(ShuttleTimetable).values(timetable)
     db_session.execute(insert_statement)
     db_session.commit()
-
