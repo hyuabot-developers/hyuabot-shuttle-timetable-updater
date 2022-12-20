@@ -58,4 +58,3 @@ async def fetch_shuttle_timetable(db_session: Session, period: str, day: str):
     insert_statement = insert(ShuttleTimetable).values(timetable)
     db_session.execute(insert_statement)
     db_session.commit()
-
