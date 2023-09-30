@@ -28,12 +28,7 @@ async def fetch_shuttle_timetable(db_session: Session, period: str, day: str):
     day_dict = {"week": "weekdays", "weekend": "weekends"}
     timetable: list[dict] = []
 
-    cumulative_time_dict: dict[str, dict[str, int]] = {}
     route_dict: dict[str, dict] = {}
-    for stop_route_item in db_session.query(ShuttleRouteStop).all():  # type: ShuttleRouteStop
-        if stop_route_item.route_name not in cumulative_time_dict:
-            cumulative_time_dict[stop_route_item.route_name] = {}
-        cumulative_time_dict[stop_route_item.route_name][stop_route_item.stop_name] = stop_route_item.cumulative_time
     for route_item in db_session.query(ShuttleRoute).all():  # type: ShuttleRoute
         if route_item.route_tag not in route_dict:
             route_dict[route_item.route_tag] = {}
@@ -43,18 +38,14 @@ async def fetch_shuttle_timetable(db_session: Session, period: str, day: str):
             reader = csv.reader((await response.text()).splitlines(), delimiter=",")
             for shuttle_type, shuttle_time, shuttle_start_stop, shuttle_end_stop in reader:
                 route_name = route_dict[shuttle_type][(shuttle_start_stop, shuttle_end_stop)]
-                for stop_name in cumulative_time_dict[route_name].keys():
-                    departure_time = datetime.strptime(shuttle_time, "%H:%M") + timedelta(
-                        minutes=cumulative_time_dict[route_name][stop_name])
-                    timetable.append(
-                        dict(
-                            route_name=route_name,
-                            period_type=period,
-                            weekday=day_dict[day] == "weekdays",
-                            stop_name=stop_name,
-                            departure_time=departure_time.time(),
-                        ),
-                    )
+                timetable.append(
+                    dict(
+                        route_name=route_name,
+                        period_type=period,
+                        weekday=day_dict[day] == "weekdays",
+                        departure_time=f'{shuttle_time} +09:00',
+                    ),
+                )
     insert_statement = insert(ShuttleTimetable).values(timetable)
     db_session.execute(insert_statement)
     db_session.commit()
