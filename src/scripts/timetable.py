@@ -1,12 +1,11 @@
 import asyncio
 import csv
-from datetime import datetime, timedelta
 
 from aiohttp import ClientSession
 from sqlalchemy import insert
 from sqlalchemy.orm import Session
 
-from models import ShuttleTimetable, ShuttleRouteStop, ShuttleRoute
+from models import ShuttleTimetable, ShuttleRoute
 
 
 async def insert_shuttle_timetable(db_session: Session):

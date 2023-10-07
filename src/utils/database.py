@@ -25,4 +25,3 @@ def get_master_db_engine() -> Engine:
         f"{os.getenv('POSTGRES_EXTERNAL_PORT')}/{os.getenv('POSTGRES_DB')}",
     )
     return db_engine
-

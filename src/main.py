@@ -25,7 +25,7 @@ async def main():
         session = session_constructor()
         await execute_script(session)
 
-        
+
 async def execute_script(session):
     session.execute(delete(ShuttleTimetable))
     session.execute(delete(ShuttleRouteStop))
