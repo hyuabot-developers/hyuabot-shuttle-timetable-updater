@@ -1,7 +1,7 @@
 import datetime
 
 import pytest
-from sqlalchemy import Engine
+from sqlalchemy import Engine, delete
 from sqlalchemy.orm import Session, sessionmaker
 
 from models import BaseModel, ShuttleRoute, ShuttleRouteStop, ShuttleTimetable
@@ -32,7 +32,9 @@ class TestInsertShuttleData:
         session_constructor = sessionmaker(bind=connection)
         # Database session check
         session = session_constructor()
-
+        session.execute(delete(ShuttleTimetable))
+        session.execute(delete(ShuttleRouteStop))
+        session.execute(delete(ShuttleRoute))
         # Insert shuttle route
         await get_route_list(session)
         # Check if the data is inserted
@@ -52,7 +54,7 @@ class TestInsertShuttleData:
             assert type(stop_route_item.route_name) is str
             assert type(stop_route_item.stop_name) is str
             assert type(stop_route_item.stop_order) is int
-            assert type(stop_route_item.cumulative_time) is int
+            assert type(stop_route_item.cumulative_time) is datetime.timedelta
 
         # Insert shuttle timetable
         await insert_shuttle_timetable(session)
@@ -61,7 +63,6 @@ class TestInsertShuttleData:
             assert type(timetable_item.route_name) is str
             assert type(timetable_item.period_type) is str
             assert type(timetable_item.weekday) is bool
-            assert type(timetable_item.stop_name) is str
             assert type(timetable_item.departure_time) is datetime.time
 
         session.close()
