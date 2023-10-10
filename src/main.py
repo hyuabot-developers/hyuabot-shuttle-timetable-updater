@@ -1,6 +1,6 @@
 import asyncio
 
-from sqlalchemy import delete
+from sqlalchemy import delete, text
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import sessionmaker
 
@@ -27,7 +27,10 @@ async def main():
 
 
 async def execute_script(session):
+    drop_seq = \
+        text("alter sequence shuttle_timetable_seq_seq restart with 1;")
     session.execute(delete(ShuttleTimetable))
+    session.execute(drop_seq)
     session.execute(delete(ShuttleRouteStop))
     session.execute(delete(ShuttleRoute))
     await get_route_list(session)

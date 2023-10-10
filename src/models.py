@@ -1,6 +1,6 @@
 import datetime
 
-from sqlalchemy import Integer, String, Boolean, Interval, Time
+from sqlalchemy import Integer, String, Boolean, Interval, Time, Sequence
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 
@@ -28,7 +28,11 @@ class ShuttleRouteStop(BaseModel):
 
 class ShuttleTimetable(BaseModel):
     __tablename__ = 'shuttle_timetable'
-    seq: Mapped[int] = mapped_column(Integer, primary_key=True)
+    seq: Mapped[int] = mapped_column(
+        Sequence("shuttle_timetable_seq_seq"),
+        primary_key=True,
+        autoincrement=True,
+    )
     route_name: Mapped[str] = mapped_column(String(15))
     period_type: Mapped[str] = mapped_column(String(20))
     weekday: Mapped[bool] = mapped_column(Boolean)
