@@ -41,9 +41,9 @@ class TestInsertShuttleData:
         shuttle_route_count = session.query(ShuttleRoute).count()
         assert shuttle_route_count > 0
         for route_item in session.query(ShuttleRoute).all():  # type: ShuttleRoute
-            assert type(route_item.route_name) is str
-            assert type(route_item.route_description_korean) is str
-            assert type(route_item.route_description_english) is str
+            assert isinstance(route_item.route_name, str)
+            assert isinstance(route_item.route_description_korean, str)
+            assert isinstance(route_item.route_description_english, str)
 
         # Insert shuttle route-stop
         await get_route_stop_list(session)
@@ -51,18 +51,18 @@ class TestInsertShuttleData:
         shuttle_stop_route_count = session.query(ShuttleRouteStop).count()
         assert shuttle_stop_route_count > 0
         for stop_route_item in session.query(ShuttleRouteStop).all():  # type: ShuttleRouteStop
-            assert type(stop_route_item.route_name) is str
-            assert type(stop_route_item.stop_name) is str
-            assert type(stop_route_item.stop_order) is int
-            assert type(stop_route_item.cumulative_time) is datetime.timedelta
+            assert isinstance(stop_route_item.route_name, str)
+            assert isinstance(stop_route_item.stop_name, str)
+            assert isinstance(stop_route_item.stop_order, int)
+            assert isinstance(stop_route_item.cumulative_time, datetime.timedelta)
 
         # Insert shuttle timetable
         await insert_shuttle_timetable(session)
         # Check if the data is inserted
         for timetable_item in session.query(ShuttleTimetable).all():  # type: ShuttleTimetable
-            assert type(timetable_item.route_name) is str
-            assert type(timetable_item.period_type) is str
-            assert type(timetable_item.weekday) is bool
-            assert type(timetable_item.departure_time) is datetime.time
+            assert isinstance(timetable_item.route_name, str)
+            assert isinstance(timetable_item.period_type, str)
+            assert isinstance(timetable_item.weekday, bool)
+            assert isinstance(timetable_item.departure_time, datetime.time)
 
         session.close()
