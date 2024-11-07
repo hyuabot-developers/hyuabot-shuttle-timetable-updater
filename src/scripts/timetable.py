@@ -42,7 +42,7 @@ async def fetch_shuttle_timetable(db_session: Session, period: str, day: str):
                         route_name=route_name,
                         period_type=period,
                         weekday=day_dict[day] == "weekdays",
-                        departure_time=f'{shuttle_time} +09:00',
+                        departure_time=shuttle_time,
                     ),
                 )
     insert_statement = insert(ShuttleTimetable).values(timetable)
