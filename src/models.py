@@ -1,6 +1,6 @@
 import datetime
 
-from sqlalchemy import Integer, String, Boolean, Interval, Time, Sequence
+from sqlalchemy import Integer, String, Boolean, Time, Sequence
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 
@@ -23,7 +23,7 @@ class ShuttleRouteStop(BaseModel):
     route_name: Mapped[str] = mapped_column(String(10), primary_key=True)
     stop_name: Mapped[str] = mapped_column(String(15), primary_key=True)
     stop_order: Mapped[int] = mapped_column(Integer, primary_key=True)
-    cumulative_time: Mapped[datetime.timedelta] = mapped_column(Interval)
+    cumulative_time: Mapped[int] = mapped_column(Integer)
 
 
 class ShuttleTimetable(BaseModel):

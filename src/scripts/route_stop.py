@@ -1,6 +1,6 @@
 import asyncio
 import csv
-from datetime import timedelta
+from datetime import time
 
 from aiohttp import ClientTimeout, ClientSession
 from sqlalchemy import insert
@@ -23,7 +23,7 @@ async def get_route_stop_list(db_session: Session) -> None:
                         "route_name": route_name,
                         "stop_name": stop_name,
                         "stop_order": stop_order,
-                        "cumulative_time": timedelta(minutes=float(cumulative_time)),
+                        "cumulative_time": int(cumulative_time),
                     })
     except asyncio.exceptions.TimeoutError:
         print("TimeoutError")
