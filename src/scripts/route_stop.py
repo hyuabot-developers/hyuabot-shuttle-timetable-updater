@@ -1,6 +1,5 @@
 import asyncio
 import csv
-from datetime import time
 
 from aiohttp import ClientTimeout, ClientSession
 from sqlalchemy import insert

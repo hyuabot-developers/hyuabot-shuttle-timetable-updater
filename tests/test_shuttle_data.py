@@ -54,7 +54,7 @@ class TestInsertShuttleData:
             assert isinstance(stop_route_item.route_name, str)
             assert isinstance(stop_route_item.stop_name, str)
             assert isinstance(stop_route_item.stop_order, int)
-            assert isinstance(stop_route_item.cumulative_time, datetime.timedelta)
+            assert isinstance(stop_route_item.cumulative_time, int)
 
         # Insert shuttle timetable
         await insert_shuttle_timetable(session)
